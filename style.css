@@ -1,0 +1,578 @@
+/* ==========================================================================
+   PALETA DE COLORES Y VARIABLES POKEDEX
+   ========================================================================== */
+:root {
+    /* Tonos Rojo Pokedex */
+    --pokedex-rojo: #dc2626;
+    --pokedex-rojo-oscuro: #991b1b;
+    --pokedex-rojo-brillante: #ef4444;
+    
+    /* Neutros */
+    --metal-borde: #334155;
+    --metal-pantalla: #1e293b;
+    --pantalla-fondo: #0f172a;
+    --texto-claro: #f8fafc;
+    --texto-oscuro: #0f172a;
+    --gris-cuerpo: #e2e8f0;
+    --blanco: #ffffff;
+    
+    /* Luces e Indicadores */
+    --azul-scanner: #38bdf8;
+    --azul-scanner-brillo: rgba(56, 189, 248, 0.6);
+    --rojo-led: #ef4444;
+    --amarillo-led: #f59e0b;
+    --verde-led: #10b981;
+
+    /* Tipografía */
+    --fuente: 'Outfit', sans-serif;
+    
+    /* Sombras y Transiciones */
+    --sombra-fisica: 0 10px 25px rgba(0, 0, 0, 0.2), inset 0 -8px 0 rgba(0, 0, 0, 0.15);
+    --sombra-pantalla: inset 0 4px 10px rgba(0, 0, 0, 0.5);
+    --transicion: all 0.3s ease;
+}
+
+/* ==========================================================================
+   ESTILOS GENERALES
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--fuente);
+    background-color: #cbd5e1;
+    background-image: radial-gradient(#94a3b8 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: var(--texto-oscuro);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+/* Contenedor Externo Centrado */
+.pokedex-wrapper {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ==========================================================================
+   ESTILO CUERPO DE LA POKEDEX FÍSICA
+   ========================================================================== */
+.pokedex-body {
+    background: linear-gradient(135deg, var(--pokedex-rojo-brillante) 0%, var(--pokedex-rojo) 50%, var(--pokedex-rojo-oscuro) 100%);
+    border: 8px solid #1e293b;
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    box-shadow: var(--sombra-fisica);
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto de brillo de plástico/metal en el cuerpo */
+.pokedex-body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ==========================================================================
+   LEDS SUPERIORES & LENTE
+   ========================================================================== */
+.pokedex-lights {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border-bottom: 3px double rgba(0, 0, 0, 0.15);
+    padding-bottom: 1.2rem;
+    position: relative;
+}
+
+/* El sensor azul circular grande */
+.sensor-azul-grande {
+    width: 56px;
+    height: 56px;
+    background: radial-gradient(circle, #e0f2fe 0%, var(--azul-scanner) 60%, #0369a1 100%);
+    border: 5px solid var(--blanco);
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3), 0 0 15px var(--azul-scanner-brillo);
+    position: relative;
+    animation: pulsarSensor 3s infinite ease-in-out;
+    cursor: pointer;
+}
+
+.sensor-brillo {
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    width: 12px;
+    height: 12px;
+    background-color: var(--blanco);
+    border-radius: 50%;
+    opacity: 0.8;
+}
+
+/* LEDS Pequeños */
+.led-pequeno {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgba(0,0,0,0.2);
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.4);
+}
+
+.led-rojo { background-color: var(--rojo-led); }
+.led-amarillo { background-color: var(--amarillo-led); }
+.led-verde { background-color: var(--verde-led); }
+
+.pokedex-titulo {
+    margin-left: auto;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--blanco);
+    background-color: rgba(0, 0, 0, 0.25);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   PANTALLA DE VISUALIZACIÓN
+   ========================================================================== */
+/* Borde metálico de la pantalla */
+.pokedex-screen-border {
+    background-color: var(--gris-cuerpo);
+    border: 5px solid var(--metal-borde);
+    border-radius: 12px;
+    padding: 1rem 1rem 1.8rem 1rem;
+    box-shadow: inset 0 4px 6px rgba(0,0,0,0.15), 0 4px 6px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+/* Pantalla LCD Interna */
+.pokedex-screen {
+    background-color: var(--pantalla-fondo);
+    border: 4px solid var(--metal-pantalla);
+    border-radius: 6px;
+    height: 250px;
+    box-shadow: var(--sombra-pantalla);
+    padding: 1.25rem;
+    color: var(--texto-claro);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Rejilla decorativa de altavoz físico */
+.pokedex-screen-border::after {
+    content: '...';
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+    color: var(--metal-borde);
+    font-weight: 900;
+    letter-spacing: 12px;
+    line-height: 0;
+}
+
+/* Estados de pantalla */
+.estado-pantalla {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    animation: fundidoEntrada 0.3s ease-out forwards;
+}
+
+.oculto {
+    display: none !important;
+}
+
+/* 1. Pantalla Inicio */
+.pokebola-silueta {
+    width: 70px;
+    height: 70px;
+    background: radial-gradient(circle, transparent 20%, var(--metal-borde) 21%, transparent 35%);
+    border: 4px dashed var(--metal-borde);
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+}
+
+.estado-pantalla h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.estado-pantalla p {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    line-height: 1.4;
+    max-width: 260px;
+}
+
+.ejemplo-sugerencia {
+    font-size: 0.75rem;
+    color: var(--azul-scanner);
+    margin-top: 0.75rem;
+}
+
+/* 2. Pantalla Cargando */
+.cargador-animado {
+    width: 44px;
+    height: 44px;
+    border: 4px solid rgba(56, 189, 248, 0.1);
+    border-top: 4px solid var(--azul-scanner);
+    border-radius: 50%;
+    animation: rotar 0.8s linear infinite;
+    margin-bottom: 1rem;
+}
+
+.cargador-subtexto {
+    font-size: 0.75rem;
+    color: #64748b !important;
+    margin-top: 0.25rem;
+}
+
+/* 3. Pantalla Error */
+.error-icono {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* 4. Pantalla Resultados exitosos */
+.resultado-cabecera {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.pokemon-numero {
+    font-family: monospace;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.pokemon-nombre {
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-transform: capitalize;
+    letter-spacing: -0.02em;
+}
+
+.resultado-imagen-caja {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 0.5rem;
+    height: 80px;
+}
+
+.resultado-imagen-caja::before {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(56,189,248,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.pokemon-imagen {
+    height: 84px;
+    z-index: 2;
+    image-rendering: pixelated;
+    animation: flotarPokemon 3s ease-in-out infinite;
+}
+
+.resultado-tipos {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+}
+
+/* Medidas Altura y Peso */
+.resultado-medidas {
+    display: flex;
+    gap: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 0.4rem 1.25rem;
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.medida-caja {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.medida-titulo {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 700;
+}
+
+.medida-valor {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Estadísticas de combate simple */
+.resultado-estadisticas {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.estadistica-fila {
+    display: grid;
+    grid-template-columns: 70px 1fr 24px;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.7rem;
+}
+
+.stat-lbl {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.stat-barra-fondo {
+    height: 6px;
+    background-color: #1e293b;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.stat-barra-llena {
+    height: 100%;
+    background-color: var(--azul-scanner);
+    border-radius: 999px;
+    width: 0%;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-num {
+    text-align: right;
+    font-weight: 700;
+    color: var(--blanco);
+}
+
+/* ==========================================================================
+   BOTONES E INPUTS (CONTROLES)
+   ========================================================================== */
+.pokedex-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.formulario-busqueda {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.input-contenedor {
+    flex: 1;
+    background-color: var(--blanco);
+    border: 3px solid var(--metal-borde);
+    border-radius: 8px;
+    padding: 0.5rem 0.8rem;
+    display: flex;
+    align-items: center;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.input-contenedor input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--texto-oscuro);
+}
+
+.input-contenedor input::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+.boton-pokedex {
+    background-color: #1e293b;
+    color: var(--blanco);
+    border: 3px solid var(--metal-borde);
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 4px 0 var(--metal-borde);
+    transition: var(--transicion-fast);
+}
+
+.boton-pokedex:hover {
+    background-color: #0f172a;
+}
+
+.boton-pokedex:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--metal-borde);
+}
+
+/* Controles Físicos Decorativos */
+.decoracion-pokedex {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+    height: 50px;
+    margin-top: 0.25rem;
+}
+
+.boton-decorativo {
+    height: 12px;
+    border-radius: 9999px;
+    border: 2px solid rgba(0,0,0,0.2);
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.2);
+}
+
+.negro-rectangulo { width: 45px; background-color: #1e293b; }
+.azul-rectangulo { width: 45px; background-color: #0284c7; }
+.verde-rectangulo { width: 45px; background-color: #16a34a; }
+
+/* Cruceta clásica */
+.cruceta-direccion {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+}
+
+.cruceta-eje {
+    position: absolute;
+    background-color: #1e293b;
+    border: 2px solid #0f172a;
+    border-radius: 4px;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+}
+
+.eje-horizontal {
+    top: 20px;
+    left: 0;
+    width: 60px;
+    height: 20px;
+}
+
+.eje-vertical {
+    top: 0;
+    left: 20px;
+    width: 20px;
+    height: 60px;
+}
+
+/* ==========================================================================
+   INSIGNIAS DE TIPOS (COLORES DE POKEMON)
+   ========================================================================== */
+.tipo-insignia {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    color: var(--blanco);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Paleta de colores oficiales de tipos */
+.normal { background-color: #a8a878; }
+.fire { background-color: #f08030; }
+.water { background-color: #6890f0; }
+.grass { background-color: #78c850; }
+.electric { background-color: #f8d030; color: #1e293b !important; }
+.ice { background-color: #98d8d8; color: #1e293b !important; }
+.fighting { background-color: #c03028; }
+.poison { background-color: #a040a0; }
+.ground { background-color: #e0c068; }
+.flying { background-color: #a890f0; }
+.psychic { background-color: #f85888; }
+.bug { background-color: #a8b820; }
+.rock { background-color: #b8a038; }
+.ghost { background-color: #705898; }
+.dragon { background-color: #7038f8; }
+.dark { background-color: #705848; }
+.steel { background-color: #b8b8d0; color: #1e293b !important; }
+.fairy { background-color: #ee99ac; }
+
+/* ==========================================================================
+   FOOTER FORMATO PEDAGÓGICO
+   ========================================================================== */
+.pokedex-footer {
+    text-align: center;
+    background-color: var(--blanco);
+    border: 3px solid var(--metal-borde);
+    border-radius: 12px;
+    padding: 1rem;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================================
+   ANIMACIONES CLAVE
+   ========================================================================== */
+@keyframes pulsarSensor {
+    0%, 100% { box-shadow: 0 4px 10px rgba(0,0,0,0.3), 0 0 10px var(--azul-scanner-brillo); }
+    50% { box-shadow: 0 4px 10px rgba(0,0,0,0.3), 0 0 25px rgba(56, 189, 248, 1); }
+}
+
+@keyframes rotar {
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fundidoEntrada {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes flotarPokemon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}

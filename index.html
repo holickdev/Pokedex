@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex de Aprendizaje - Cliente/Servidor</title>
+    <!-- Google Fonts: Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Vinculación del archivo de estilos CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="pokedex-wrapper">
+        <!-- Cuerpo Principal de la Pokedex Física -->
+        <main class="pokedex-body">
+
+            <!-- Luces Superiores Clásicas de la Pokedex -->
+            <header class="pokedex-lights">
+                <!-- Gran lente/sensor de cámara azul -->
+                <div class="sensor-azul-grande" id="sensorCamara">
+                    <div class="sensor-brillo"></div>
+                </div>
+                <!-- Pequeños LEDs de estado (Rojo, Amarillo, Verde) -->
+                <div class="led-pequeno led-rojo"></div>
+                <div class="led-pequeno led-amarillo"></div>
+                <div class="led-pequeno led-verde"></div>
+                <span class="pokedex-titulo">Pokedex Educativa</span>
+            </header>
+
+            <!-- Pantalla Principal de Visualización -->
+            <section class="pokedex-screen-border">
+                <div class="pokedex-screen" id="pantallaPokedex">
+
+                    <!-- Pantalla de Resultados Simples (Nombre e Imagen) -->
+                    <div class="estado-pantalla">
+                        <!-- Nombre del Pokémon -->
+                        <h3 class="pokemon-nombre" id="nombrePokemon">¡Busca un Pokémon!</h3>
+
+                        <!-- Imagen principal del Pokémon -->
+                        <div class="resultado-imagen-caja">
+                            <img src="" alt="" class="pokemon-imagen" id="imagenPokemon">
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Sección de Controles Físicos (Botonera e Input de Búsqueda) -->
+            <section class="pokedex-controls">
+
+                <!-- Formulario de búsqueda para enviar con Enter o clic en botón -->
+                <form class="formulario-busqueda" id="formularioBusqueda">
+                    <div class="input-contenedor">
+                        <input type="text" id="entradaBusqueda" placeholder="Ej. pikachu, charizard, bulbasaur..."
+                            required>
+                    </div>
+                    <button type="submit" class="boton-pokedex" id="botonBuscar">
+                        Buscar 🔍
+                    </button>
+                </form>
+
+                <!-- Botones decorativos que imitan la Pokedex física real -->
+                <div class="decoracion-pokedex">
+                    <div class="boton-decorativo negro-rectangulo"></div>
+                    <div class="boton-decorativo azul-rectangulo"></div>
+                    <div class="boton-decorativo verde-rectangulo"></div>
+                    <div class="cruceta-direccion">
+                        <div class="cruceta-eje eje-horizontal"></div>
+                        <div class="cruceta-eje eje-vertical"></div>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
