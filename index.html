@@ -5,80 +5,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex de Aprendizaje - Cliente/Servidor</title>
-    <!-- Google Fonts: Outfit -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
         rel="stylesheet">
-    <!-- Vinculación del archivo de estilos CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="pokedex-wrapper">
-        <!-- Cuerpo Principal de la Pokedex Física -->
-        <main class="pokedex-body">
+    <!-- ═══════════════════════════════════════════════════════
+         LAYOUT: Pokedex (izquierda) + Depurador (derecha)
+         ═══════════════════════════════════════════════════════ -->
+    <div class="pagina-layout">
 
-            <!-- Luces Superiores Clásicas de la Pokedex -->
-            <header class="pokedex-lights">
-                <!-- Gran lente/sensor de cámara azul -->
-                <div class="sensor-azul-grande" id="sensorCamara">
-                    <div class="sensor-brillo"></div>
-                </div>
-                <!-- Pequeños LEDs de estado (Rojo, Amarillo, Verde) -->
-                <div class="led-pequeno led-rojo"></div>
-                <div class="led-pequeno led-amarillo"></div>
-                <div class="led-pequeno led-verde"></div>
-                <span class="pokedex-titulo">Pokedex Educativa</span>
-            </header>
+        <!-- ── PANEL IZQUIERDO: Pokedex física ── -->
+        <div class="pokedex-wrapper">
+            <main class="pokedex-body">
 
-            <!-- Pantalla Principal de Visualización -->
-            <section class="pokedex-screen-border">
-                <div class="pokedex-screen" id="pantallaPokedex">
+                <header class="pokedex-lights">
+                    <div class="sensor-azul-grande" id="sensorCamara">
+                        <div class="sensor-brillo"></div>
+                    </div>
+                    <div class="led-pequeno led-rojo"></div>
+                    <div class="led-pequeno led-amarillo"></div>
+                    <div class="led-pequeno led-verde"></div>
+                    <span class="pokedex-titulo">Pokedex Educativa</span>
+                </header>
 
-                    <!-- Pantalla de Resultados Simples (Nombre e Imagen) -->
-                    <div class="estado-pantalla">
-                        <!-- Nombre del Pokémon -->
-                        <h3 class="pokemon-nombre" id="nombrePokemon">¡Busca un Pokémon!</h3>
-
-                        <!-- Imagen principal del Pokémon -->
-                        <div class="resultado-imagen-caja">
-                            <img src="" alt="" class="pokemon-imagen" id="imagenPokemon">
+                <section class="pokedex-screen-border">
+                    <div class="pokedex-screen" id="pantallaPokedex">
+                        <div class="estado-pantalla">
+                            <h3 class="pokemon-nombre" id="nombrePokemon">¡Busca un Pokémon!</h3>
+                            <div class="resultado-imagen-caja">
+                                <img src="" alt="" class="pokemon-imagen" id="imagenPokemon">
+                            </div>
                         </div>
                     </div>
+                </section>
 
-                </div>
-            </section>
+                <section class="pokedex-controls">
+                    <form class="formulario-busqueda" id="formularioBusqueda">
+                        <div class="input-contenedor">
+                            <input type="text" id="entradaBusqueda" placeholder="Ej. pikachu, charizard..." required>
+                        </div>
+                        <button type="submit" class="boton-pokedex" id="botonBuscar">
+                            Buscar 🔍
+                        </button>
+                    </form>
 
-            <!-- Sección de Controles Físicos (Botonera e Input de Búsqueda) -->
-            <section class="pokedex-controls">
-
-                <!-- Formulario de búsqueda para enviar con Enter o clic en botón -->
-                <form class="formulario-busqueda" id="formularioBusqueda">
-                    <div class="input-contenedor">
-                        <input type="text" id="entradaBusqueda" placeholder="Ej. pikachu, charizard, bulbasaur..."
-                            required>
+                    <div class="decoracion-pokedex">
+                        <div class="boton-decorativo negro-rectangulo"></div>
+                        <div class="boton-decorativo azul-rectangulo"></div>
+                        <div class="boton-decorativo verde-rectangulo"></div>
+                        <div class="cruceta-direccion">
+                            <div class="cruceta-eje eje-horizontal"></div>
+                            <div class="cruceta-eje eje-vertical"></div>
+                        </div>
                     </div>
-                    <button type="submit" class="boton-pokedex" id="botonBuscar">
-                        Buscar 🔍
-                    </button>
-                </form>
+                </section>
 
-                <!-- Botones decorativos que imitan la Pokedex física real -->
-                <div class="decoracion-pokedex">
-                    <div class="boton-decorativo negro-rectangulo"></div>
-                    <div class="boton-decorativo azul-rectangulo"></div>
-                    <div class="boton-decorativo verde-rectangulo"></div>
-                    <div class="cruceta-direccion">
-                        <div class="cruceta-eje eje-horizontal"></div>
-                        <div class="cruceta-eje eje-vertical"></div>
-                    </div>
+            </main>
+        </div>
+
+        <!-- ── PANEL DERECHO: Depurador de código ── -->
+        <div class="panel-depurador">
+
+            <div class="dep-header">
+                <span class="dep-titulo">🔍 Depurador en Tiempo Real</span>
+                <span class="dep-subtitulo">Cada línea se ilumina cuando se ejecuta</span>
+            </div>
+
+            <!-- Visor del código con monitores de variables -->
+            <div class="codigo-viewer">
+
+                <div class="linea linea-envoltorio">
+                    <span class="num">1</span>
+                    <code>formulario.<span class="c-fn">addEventListener</span>(<span class="c-str">'submit'</span>, <span class="c-kw">async</span> () => {</code>
                 </div>
 
-            </section>
+                <div class="linea" id="linea-1">
+                    <span class="num">2</span>
+                    <code>&nbsp;&nbsp;<span class="c-kw">const</span> <span class="c-var">nombre</span> = input.<span class="c-fn">value</span>.<span class="c-fn">toLowerCase</span>()</code>
+                    <span class="monitor" id="mon-nombre">—</span>
+                </div>
 
-        </main>
+                <div class="linea" id="linea-2">
+                    <span class="num">3</span>
+                    <code>&nbsp;&nbsp;<span class="c-kw">const</span> <span class="c-var">respuesta</span> = <span class="c-kw">await</span> <span class="c-fn">fetch</span>(<span class="c-str" id="mon-url">`/pokemon/...`</span>)</code>
+                    <span class="monitor" id="mon-respuesta">—</span>
+                </div>
+
+                <div class="linea" id="linea-3">
+                    <span class="num">4</span>
+                    <code>&nbsp;&nbsp;<span class="c-kw">const</span> <span class="c-var">datos</span> = <span class="c-kw">await</span> respuesta.<span class="c-fn">json</span>()</code>
+                    <span class="monitor" id="mon-datos">—</span>
+                </div>
+
+                <div class="linea" id="linea-4">
+                    <span class="num">5</span>
+                    <code>&nbsp;&nbsp;elemento.<span class="c-fn">innerText</span> = datos.<span class="c-var">name</span></code>
+                    <span class="monitor" id="mon-name">—</span>
+                </div>
+
+                <div class="linea" id="linea-5">
+                    <span class="num">6</span>
+                    <code>&nbsp;&nbsp;imagen.<span class="c-fn">src</span> = datos.sprites.<span class="c-var">front_default</span></code>
+                    <span class="monitor" id="mon-src">—</span>
+                </div>
+
+                <div class="linea linea-envoltorio">
+                    <span class="num">7</span>
+                    <code>})</code>
+                </div>
+
+            </div>
+
+            <div class="dep-leyenda">
+                <span class="leyenda-dot azul"></span> Ejecutando &nbsp;
+                <span class="leyenda-dot verde"></span> Completado &nbsp;|&nbsp;
+                <span class="leyenda-badge">[ valor ]</span> variable en tiempo real
+            </div>
+
+        </div>
+
     </div>
-    <script src="script.js"></script>
+
+    <!-- Carga primero los helpers del depurador, luego el script con la lógica -->
+    <script src="debugger/helpers.js"></script>
+    <script src="debugger/script.js"></script>
+
 </body>
 
 </html>
